@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+
+{% block title %}Login{% endblock %}
+{% block content %}
+<!-- SignInForm -->
+{% if signinform.errors %}
+    {% for fields in signinform %}
+        {% for errors in fields.errors %}
+            {{error|escape}}
+        {% endfor %}
+    {% endfor %}
+
+    {% for errors in signinform.non_field_errors %}
+        {{ errors }}
+    {% endfor %}
+{% endif %}
+
+<form action="" method="POST">
+    {% csrf_token %}
+    {% for fields in signinform %}
+        {{fields}}
+    {% endfor %}
+    <button type="submit" class="btn btn-success" name="signinform">Login</button>
+</form>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+
+{% block title %}SignUp{% endblock %}
+
+{% block content %}
+<!-- SignUpForm -->
+{% if signupform.errors %}
+    {% for fields in signupform %}
+        {% for errors in fields.errors %}
+            {{error|escape}}
+        {% endfor %}
+    {% endfor %}
+
+    {% for errors in signupform.non_field_errors %}
+        {{ errors }}
+    {% endfor %}
+{% endif %}
+
+<form action="" method="POST">
+        {% csrf_token %}
+        First Name {{signupform.first_name}}
+        Last Name {{signupform.last_name}}
+        Username {{signupform.user_name}}
+        Email {{signupform.email}}
+        Password {{signupform.password1}}
+        Password Again {{signupform.password2}}
+        <button type="submit" class="btn btn-info" name="signupform">Signin</button>
+</form>
+
+{% endblock %}

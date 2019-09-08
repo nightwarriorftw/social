@@ -1,0 +1,23 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    {% include "base/css.html" %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    
+    <title>{% block title %}{% endblock %}</title>
+  </head>
+  <body>
+
+    {% include 'base/navbar.html' with username=request.user.username %}
+
+    <div class="spacing">
+    {% block content %}{% endblock %}
+    </div>
+    {% include 'base/js.html' %}
+    
+  </body>
+</html>

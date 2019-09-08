@@ -1,12 +1,24 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from accounts.views import (
+    home,
+    auth_login,
+    auth_register,
+    auth_logout,
+
+)
 
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', home, name="home"),
+    path('login/', auth_login, name="login"),
+    path('register/', auth_register, name="register"),
+    path('logout/', auth_logout, name='logout'),
+    path('feed/', include("accounts.urls", namespace='feed' )),
 ]
 
 if settings.DEBUG == True:

@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from .forms import SignInForm, SignUpForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 
 
@@ -65,10 +66,10 @@ def auth_register(request):
     return render(request, "auth/register.html", context)
 
 
+@login_required
 def auth_logout(request):
-    if request.user.is_authenticated:
-        logout(request)
-        return redirect('/')
+    logout(request)
+    return redirect('/')
 
 
 def show_profile(request, username):

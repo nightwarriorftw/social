@@ -15,7 +15,6 @@ A heaven for Gamers.
 ## About
 
 Gaming community is evolving in India day-by-day. And there should be a social platform where gamers can share their experience and acheivements.
-This project is open to all. Just clone and make PR. 
 
 ### Project Setup:
 

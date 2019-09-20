@@ -1,5 +1,5 @@
 <p style="align: center;">
-<img src="">
+<img src="graphics/social.png">
 </p>
 
 
@@ -223,4 +223,4 @@ Pictures of your project.
 Credit the me and other contributors
 
 ##  :lock: License
-[LICENSE](../LICENSE)
+[LICENSE](/LICENSE)

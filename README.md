@@ -88,18 +88,8 @@ Add a file structure here with the basic details about files, below is an exampl
 │   │   ├── __init__.py
 │   │   ├── migrations
 │   │   │   ├── 0001_initial.py
-│   │   │   ├── __init__.py
-│   │   │   └── __pycache__
-│   │   │       ├── 0001_initial.cpython-37.pyc
-│   │   │       └── __init__.cpython-37.pyc
+│   │   │   └── __init__.py
 │   │   ├── models.py
-│   │   ├── __pycache__
-│   │   │   ├── admin.cpython-37.pyc
-│   │   │   ├── forms.cpython-37.pyc
-│   │   │   ├── __init__.cpython-37.pyc
-│   │   │   ├── models.cpython-37.pyc
-│   │   │   ├── urls.cpython-37.pyc
-│   │   │   └── views.cpython-37.pyc
 │   │   ├── templates
 │   │   │   ├── auth
 │   │   │   │   ├── login.html
@@ -112,16 +102,6 @@ Add a file structure here with the basic details about files, below is an exampl
 │   │   │       └── post.html
 │   │   ├── tests
 │   │   │   ├── __init__.py
-│   │   │   ├── __pycache__
-│   │   │   │   ├── __init__.cpython-37.pyc
-│   │   │   │   ├── test_forms.cpython-37.pyc
-│   │   │   │   ├── test_models.cpython-37.pyc
-│   │   │   │   ├── tests_forms.cpython-37.pyc
-│   │   │   │   ├── tests_models.cpython-37.pyc
-│   │   │   │   ├── tests_urls.cpython-37.pyc
-│   │   │   │   ├── tests_views.cpython-37.pyc
-│   │   │   │   ├── test_urls.cpython-37.pyc
-│   │   │   │   └── test_views.cpython-37.pyc
 │   │   │   ├── test_forms.py
 │   │   │   ├── test_models.py
 │   │   │   ├── test_urls.py
@@ -138,17 +118,8 @@ Add a file structure here with the basic details about files, below is an exampl
 │   │   ├── migrations
 │   │   │   ├── 0001_initial.py
 │   │   │   ├── 0002_auto_20190913_1447.py
-│   │   │   ├── __init__.py
-│   │   │   └── __pycache__
-│   │   │       ├── 0001_initial.cpython-37.pyc
-│   │   │       ├── 0002_auto_20190913_1447.cpython-37.pyc
-│   │   │       └── __init__.cpython-37.pyc
+│   │   │   └── __init__.py
 │   │   ├── models.py
-│   │   ├── __pycache__
-│   │   │   ├── admin.cpython-37.pyc
-│   │   │   ├── forms.cpython-37.pyc
-│   │   │   ├── __init__.cpython-37.pyc
-│   │   │   └── models.cpython-37.pyc
 │   │   ├── templates
 │   │   │   └── posts
 │   │   │       └── post.html
@@ -156,11 +127,6 @@ Add a file structure here with the basic details about files, below is an exampl
 │   │   └── views.py
 │   ├── social
 │   │   ├── __init__.py
-│   │   ├── __pycache__
-│   │   │   ├── __init__.cpython-37.pyc
-│   │   │   ├── settings.cpython-37.pyc
-│   │   │   ├── urls.cpython-37.pyc
-│   │   │   └── wsgi.cpython-37.pyc
 │   │   ├── settings.py
 │   │   ├── urls.py
 │   │   └── wsgi.py

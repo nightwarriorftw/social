@@ -1,4 +1,4 @@
-<p style="align: center;">
+<p align=center>
 <img src="graphics/social.png">
 </p>
 

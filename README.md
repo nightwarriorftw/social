@@ -217,7 +217,7 @@ After this, changes will be merged.
 Make sure that there is onle one extra line after the file ends and remember the indentation.
 
 ##  :camera: Gallery
-Pictures of your project.
+Pictures of project.
 
 ## :star2: Credit/Acknowledgment
 Credits goes to me and other contributors

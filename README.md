@@ -35,7 +35,7 @@ python3 manage.py runserver
 ```
 
 ##  :wrench: Development
-Everyone is welcome to contribute just follow the above steps.
+Everyone is welcome to contribute just follow the steps.
 
 ### :notebook: Pre-Requisites
 List all the pre-requisites the system needs to develop this project.
@@ -220,7 +220,7 @@ Make sure that there is onle one extra line after the file ends and remember the
 Pictures of your project.
 
 ## :star2: Credit/Acknowledgment
-Credit the me and other contributors
+Credits goes to me and other contributors
 
 ##  :lock: License
 [LICENSE](/LICENSE)

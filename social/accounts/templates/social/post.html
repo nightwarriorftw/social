@@ -1,0 +1,10 @@
+<div class="card">
+  <div class="card-body">
+    <p class="card-text">{{ post.body }}</p>
+  </div>
+  {% if post.image %}
+        <img class="card-img-top" src="{{post.image.url}}" alt="Card image cap">
+  {% endif %}
+  <hr/>
+  <span class="space" style="margin-bottom: 30px;"></span>
+</div>

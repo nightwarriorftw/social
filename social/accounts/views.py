@@ -4,8 +4,8 @@ from .forms import SignInForm, SignUpForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-
-
+from post.forms import AddPost
+from post.models import Post
 
 def home(request):
     if request.user.is_authenticated:
@@ -83,10 +83,26 @@ def show_profile(request, username):
     return render(request, 'profile/user.html', {"user": user})
 
 
+@login_required
 def feed(request):
+    form = AddPost()
+    if request.method=="POST":
+        form=AddPost(request.POST, request.FILES)
+        if form.is_valid():
+            instance=form.save(commit=False)
+            instance.user=request.user
+            instance.body=form.cleaned_data['body']
+            instance.image=form.cleaned_data['image']
+            instance.save()
+            return redirect(reverse("accounts:profile", kwargs = {"username": request.user.username}))
+        else:
+            print(error)
     username = request.user.username
     user = User.objects.get(username=username)
+    post = Post.objects.filter(user=user)
     context = {
-        "user": user
+        "user": user,
+        "post": post,
+        "form": form
     }
     return render(request, "social/feed.html", context)

@@ -1,5 +1,29 @@
 {% extends 'base.html' %}
 
 {% block content %}
-This is your feed {{user.first_name}}
+<div class="row">
+    <div class="row">
+        <div class="col-3">
+            <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><span style="font-size: 17px;">{{ user.first_name}} {{user.last_name}}</span></h5>
+                        <!-- <p class="card-text">Bio</p> -->
+                        <a href="{% url 'accounts:profile' user.username %}" class="card-link"><span style="font-size: 13px;">Profile</a>
+                    </div>
+            </div>
+        </div>
+        <div class="col-6">
+            {% for posts in post %}
+                {% include 'social/post.html' with post=posts %}
+            {% endfor %}
+        </div>
+        <div class="col-3">Add Posts
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{form.body}}
+                {{form.image}}
+                <button type="submit" class="btn btn-danger">Post</button>
+            </form>
+        </div>
+    </div>
 {% endblock %}

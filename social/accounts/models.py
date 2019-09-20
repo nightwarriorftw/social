@@ -6,6 +6,8 @@ class Profiles(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE)
     follow = models.ManyToManyField('self', related_name='followed_by', symmetrical=False)
 
+    def __str__(self):
+        return self.user.username
 
 def create_profile(sender, instance, created, *args, **kwargs):
     if created:

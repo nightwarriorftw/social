@@ -2,6 +2,8 @@
 <img src="graphics/social.png">
 </p>
 
+[![Open Issues](https://img.shields.io/github/issues/nightwarrior-xxx/socialr?style=for-the-badge&logo=github)](https://github.com/nightwarrior-xxx/social/issues)  [![Forks](https://img.shields.io/github/forks/nightwarrior-xxx/social?style=for-the-badge&logo=github)](https://github.com/nightwarrior-xxx/social/network/members)  [![Stars](https://img.shields.io/github/stars/nightwarrior-xxx/social?style=for-the-badge&logo=reverbnation)](hhttps://github.com/nightwarrior-xxx/social/stargazers)  ![Maintained](https://img.shields.io/maintenance/yes/2019?style=for-the-badge&logo=github)  ![Made with Python](https://img.shields.io/badge/Made%20with-Python-blueviolet?style=for-the-badge&logo=python)  ![Open Source Love](https://img.shields.io/badge/Open%20Source-%E2%99%A5-red?style=for-the-badge&logo=open-source-initiative)  ![Built with Love](https://img.shields.io/badge/Built%20With-%E2%99%A5-critical?style=for-the-badge&logo=ko-fi)  [![Follow Me](https://img.shields.io/twitter/follow/nightwarrior_xx?color=blue&label=Follow%20%40nightwarrior-xxx&logo=twitter&style=for-the-badge)](https://twitter.com/intent/follow?screen_name=nightwarrior-xxx)  [![Telegram](https://img.shields.io/badge/Telegram-Chat-informational?style=for-the-badge&logo=telegram)](https://telegram.me/nightwarrior_xxx)
+
 
 ## :ledger: Index
 

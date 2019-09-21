@@ -74,7 +74,6 @@ python3 manage.py createsuperuser
 
 
 ###  :file_folder: File Structure
-Add a file structure here with the basic details about files, below is an example.
 
 ```
 ├── LICENSE

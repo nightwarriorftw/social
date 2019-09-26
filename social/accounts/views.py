@@ -92,9 +92,10 @@ def feed(request):
             instance=form.save(commit=False)
             instance.user=request.user
             instance.body=form.cleaned_data['body']
-            instance.image=form.cleaned_data['image']
+            if form.cleaned_data['image']:
+                instance.image=form.cleaned_data['image']
             instance.save()
-            return redirect(reverse("accounts:profile", kwargs = {"username": request.user.username}))
+            return redirect(reverse("accounts:feed"))
         else:
             print(error)
     username = request.user.username

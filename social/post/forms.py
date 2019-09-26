@@ -4,7 +4,7 @@ from django import forms
 
 class AddPost(forms.ModelForm):
 
-    image = forms.ImageField()
+    image = forms.ImageField(label=("Enter a Snap"), required=False)
     class Meta:
         model = Post
         fields = ['body', 'image',]

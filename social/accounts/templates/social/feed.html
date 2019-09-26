@@ -6,8 +6,9 @@
         <div class="col-3">
             <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title"><span style="font-size: 17px;">{{ user.first_name}} {{user.last_name}}</span></h5>
+                        <h4 class="card-title"><span style="font-size: 19px;">{{ user.first_name}} {{user.last_name}}</span></h4>
                         <!-- <p class="card-text">Bio</p> -->
+                        <h6><span class="font-size: 15px;">Followers &nbsp Following</span></h6>
                         <a href="{% url 'accounts:profile' user.username %}" class="card-link"><span style="font-size: 13px;">Profile</a>
                     </div>
             </div>

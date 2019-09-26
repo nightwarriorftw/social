@@ -12,7 +12,10 @@
         <strong>Username</strong>:{{ user.username}}<br>
     </div>
     <div class="row">
-
+        <form action="" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-info">Follow</button>
+        </form>
     </div>
 </div>
 {% endblock %}

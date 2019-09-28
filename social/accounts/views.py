@@ -52,7 +52,7 @@ def auth_register(request):
                 return redirect('/')
             else:
                 messages.error(request, "Internal Server Error")
-                return redirect("{% url 'accounts:register' %}")
+                return redirect("/register")
 
         else:
             return redirect("/")
@@ -110,29 +110,30 @@ def feed(request):
 
 
 @login_required
-def follow(request, username):
+def follow_list(request, username):
     user = User.objects.get(username=username)
-    follow = user.profile.follow
+    follow = user.user_profile.follow
     return render(request, 'profile/follow_list.html', {"user": follow})
 
 
 @login_required
-def followers(request, username):
+def followers_list(request, username):
     user = User.objects.get(username=username)
-    followed_by = user.profile.followed_by
+    followed_by = user.user_profile.followed_by
     return render(request, 'profile/followers_list.html', {"user": followed_by})
+
 
 @login_required
 def follows(request, username):
     user = User.objects.get(username=username)
-    request.user.user_profile.follow.add(user)
+    request.user.user_profile.follow.add(user.user_profile)
 
     return redirect(reverse("accounts:profile", kwargs={"username": username}))
 
 
 @login_required
 def stop_follow(request, username):
-    username = User.objects.get(username=username)
-    request.user.user_profile.follow.delete(user)
+    user = User.objects.get(username=username)
+    request.user.user_profile.follow.get(user=user).delete()
 
     return redirect(reverse("accounts:profile", kwargs={"username": username}))

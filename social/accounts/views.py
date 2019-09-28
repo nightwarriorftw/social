@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from post.forms import AddPost
 from post.models import Post
 
+
 def home(request):
     if request.user.is_authenticated:
         username = request.user.username
@@ -16,7 +17,7 @@ def home(request):
 
 def auth_login(request):
 
-    if request.method=="POST":
+    if request.method == "POST":
         form = SignInForm(request.POST)
 
         if form.is_valid():
@@ -26,24 +27,23 @@ def auth_login(request):
             if user is not None:
                 login(request, user)
                 return redirect(reverse('accounts:feed'))
-        
+
     else:
-        form=SignInForm(None)
-        
-    context={
+        form = SignInForm(None)
+
+    context = {
         "signinform": form
     }
     return render(request, 'auth/login.html', context)
-
 
 
 def auth_register(request):
     if request.user.is_authenticated:
         return redirect('/')
 
-    if request.method=="POST":
+    if request.method == "POST":
         if "signupform" in request.POST:
-            form=SignUpForm(request.POST)
+            form = SignUpForm(request.POST)
 
             if form.is_valid():
                 form.save()
@@ -52,15 +52,15 @@ def auth_register(request):
                 return redirect('/')
             else:
                 messages.error(request, "Internal Server Error")
-                return redirect("{% url 'accounts:register' %}")
-        
+                return redirect("/register")
+
         else:
             return redirect("/")
     else:
-        form=SignUpForm(None)
-    
+        form = SignUpForm(None)
+
     context = {
-        "signupform": form 
+        "signupform": form
     }
 
     return render(request, "auth/register.html", context)
@@ -77,7 +77,7 @@ def show_profile(request, username):
         user = User.objects.get(username=username)
 
     else:
-        user=None
+        user = None
         return redirect("{% url 'accounts:login' %}")
 
     return render(request, 'profile/user.html', {"user": user})
@@ -86,14 +86,14 @@ def show_profile(request, username):
 @login_required
 def feed(request):
     form = AddPost()
-    if request.method=="POST":
-        form=AddPost(request.POST, request.FILES)
+    if request.method == "POST":
+        form = AddPost(request.POST, request.FILES)
         if form.is_valid():
-            instance=form.save(commit=False)
-            instance.user=request.user
-            instance.body=form.cleaned_data['body']
+            instance = form.save(commit=False)
+            instance.user = request.user
+            instance.body = form.cleaned_data['body']
             if form.cleaned_data['image']:
-                instance.image=form.cleaned_data['image']
+                instance.image = form.cleaned_data['image']
             instance.save()
             return redirect(reverse("accounts:feed"))
         else:
@@ -107,3 +107,33 @@ def feed(request):
         "form": form
     }
     return render(request, "social/feed.html", context)
+
+
+@login_required
+def follow_list(request, username):
+    user = User.objects.get(username=username)
+    follow = user.user_profile.follow
+    return render(request, 'profile/follow_list.html', {"user": follow})
+
+
+@login_required
+def followers_list(request, username):
+    user = User.objects.get(username=username)
+    followed_by = user.user_profile.followed_by
+    return render(request, 'profile/followers_list.html', {"user": followed_by})
+
+
+@login_required
+def follows(request, username):
+    user = User.objects.get(username=username)
+    request.user.user_profile.follow.add(user.user_profile)
+
+    return redirect(reverse("accounts:profile", kwargs={"username": username}))
+
+
+@login_required
+def stop_follow(request, username):
+    user = User.objects.get(username=username)
+    request.user.user_profile.follow.get(user=user).delete()
+
+    return redirect(reverse("accounts:profile", kwargs={"username": username}))

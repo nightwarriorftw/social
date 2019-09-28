@@ -12,7 +12,14 @@
         <strong>Username</strong>:{{ user.username}}<br>
     </div>
     <div class="row">
+        {% if user.username != request.user.username %}
 
+            {% if  request.user.user_profile in user.user_profile.followed_by.all %}
+                <a href="{% url 'accounts:stop_follow' user.username %}" class="btn btn-info">Unfollow</a>
+            {% else %}
+                <a href="{% url "accounts:follows" user.username %}" class="btn btn-info">Follow</button></a>
+            {% endif %}
+        {% endif %}
     </div>
 </div>
 {% endblock %}

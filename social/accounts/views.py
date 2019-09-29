@@ -67,7 +67,7 @@ def auth_register(request):
 @login_required
 def auth_logout(request):
     logout(request)
-    return redirect('/')
+    return redirect('/login')
 
 
 def show_profile(request, username):

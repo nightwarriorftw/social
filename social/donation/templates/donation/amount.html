@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container">
+        <form action="" method="POST">
+        {% csrf_token %}
+        <input type="number" placeholder="Amount" class="form-control" name="amount">
+        <button type="submit" class="btn btn-primary">Add Card </button>
+    </div>
+{% endblock %}

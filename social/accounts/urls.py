@@ -2,13 +2,13 @@ from django.urls import path
 from .views import (
     show_profile,
     feed,
-    follows_list, 
+    follows_list,
     followers_list,
     follows,
     stop_follow
 )
 
-app_name= 'accounts'
+app_name = 'accounts'
 
 urlpatterns = [
     path('', feed, name='feed'),

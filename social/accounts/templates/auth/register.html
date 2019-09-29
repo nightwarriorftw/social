@@ -19,12 +19,12 @@
 
 <form action="" method="POST">
         {% csrf_token %}
-        First Name {{signupform.first_name}}
-        Last Name {{signupform.last_name}}
-        Username {{signupform.user_name}}
-        Email {{signupform.email}}
-        Password {{signupform.password1}}
-        Password Again {{signupform.password2}}
+        First Name {{signupform.first_name}}<br>
+        Last Name {{signupform.last_name}}<br>
+        Username {{signupform.user_name}}<br>
+        Email {{signupform.email}}<br>
+        Password {{signupform.password1}}<br>
+        Password Again {{signupform.password2}}<br>
         <button type="submit" class="btn btn-info" name="signupform">Signin</button>
 </form>
 

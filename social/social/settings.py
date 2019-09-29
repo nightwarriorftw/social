@@ -40,8 +40,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-LOGOUT_URL = '/'
-LOGIN_URL = '/login'
+LOGOUT_URL = '/login'
+LOGIN_REDIRECT_URL = '/feed'
 ROOT_URLCONF = 'social.urls'
 
 TEMPLATES = [

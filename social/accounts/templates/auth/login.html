@@ -16,6 +16,10 @@
     {% endfor %}
 {% endif %}
 
+{% for message in messages %}
+    {{message}}
+{% endfor %}
+
 <form action="" method="POST">
     {% csrf_token %}
     {% for fields in signinform %}

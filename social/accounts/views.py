@@ -49,13 +49,11 @@ def auth_register(request):
                 form.save()
                 messages.success(request, 'Successfully Signed In')
                 print('User created')
-                return redirect('/')
+                return redirect("/login")
             else:
                 messages.error(request, "Internal Server Error")
                 return redirect("/register")
 
-        else:
-            return redirect("/")
     else:
         form = SignUpForm(None)
 
@@ -110,23 +108,25 @@ def feed(request):
 
 
 @login_required
-def follow_list(request, username):
+def follows_list(request, username):
     user = User.objects.get(username=username)
-    follow = user.user_profile.follow
-    return render(request, 'profile/follow_list.html', {"user": follow})
+    followed_to = user.profile.followed_to.all()
+    print(followed_to)
+    return render(request, 'profile/follow_list.html', {"user": followed_to})
 
 
 @login_required
 def followers_list(request, username):
     user = User.objects.get(username=username)
-    followed_by = user.user_profile.followed_by
+    followed_by = user.profile.followed_by.all()
+    print(followed_by)
     return render(request, 'profile/followers_list.html', {"user": followed_by})
 
 
 @login_required
 def follows(request, username):
     user = User.objects.get(username=username)
-    request.user.user_profile.follow.add(user.user_profile)
+    request.user.profile.followed_to.add(user.profile)
 
     return redirect(reverse("accounts:profile", kwargs={"username": username}))
 
@@ -134,6 +134,6 @@ def follows(request, username):
 @login_required
 def stop_follow(request, username):
     user = User.objects.get(username=username)
-    request.user.user_profile.follow.get(user=user).delete()
+    request.user.profile.followed_to.remove(user.profile)
 
     return redirect(reverse("accounts:profile", kwargs={"username": username}))

@@ -15,15 +15,8 @@ SECRET_KEY = os.environ['secret_key']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-if (len(sys.argv) >= 2 and sys.argv[1] == 'runserver'):
-    BRAINTREE_PRODUCTION = False
-else:
-    BRAINTREE_PRODUCTION = True
-BRAINTREE_PRODUCTION = False  # We'll need this later to switch between the sandbox and live account
-BRAINTREE_MERCHANT_ID = "nzgd3jdn7npr3j34"
-BRAINTREE_PUBLIC_KEY = "jr7v3vxp3wrd77zv"
-BRAINTREE_PRIVATE_KEY = "ae8f970207912b35f67d96eb676e55d7"
-
+STRIPE_SECRET_KEY = os.environ["STRIPE_SECRET_KEY"]
+STRIPE_PUBLISHABLE_KEY = os.environ["STRIPE_PUBLISHABLE_KEY"]
 
 ALLOWED_HOSTS = []
 

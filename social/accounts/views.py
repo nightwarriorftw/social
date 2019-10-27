@@ -44,7 +44,7 @@ def auth_register(request):
     if request.method == "POST":
         if "signupform" in request.POST:
             form = SignUpForm(request.POST)
-
+            
             if form.is_valid():
                 form.save()
                 messages.success(request, 'Successfully Signed In')

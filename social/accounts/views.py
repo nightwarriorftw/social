@@ -44,7 +44,7 @@ def auth_register(request):
     if request.method == "POST":
         if "signupform" in request.POST:
             form = SignUpForm(request.POST)
-
+            
             if form.is_valid():
                 form.save()
                 messages.success(request, 'Successfully Signed In')
@@ -67,7 +67,7 @@ def auth_register(request):
 @login_required
 def auth_logout(request):
     logout(request)
-    return redirect('/')
+    return redirect('/login')
 
 
 def show_profile(request, username):

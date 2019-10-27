@@ -9,16 +9,19 @@ def file_name(filename):
     name, ext = os.path.splitext(basename)
     return name, ext
 
+
 def image_upload(instance, filename):
     name, ext = file_name(filename)
     secondaryName = random.randint(1, 100000)
-    finalName = "{name}{secondaryName}".format(name=name, secondaryName=secondaryName)
+    finalName = "{name}{secondaryName}".format(
+        name=name, secondaryName=secondaryName)
     imageName = "{finalName}{ext}".format(finalName=finalName, ext=ext)
     return "{username}/posts/image/{imageName}".format(username=instance, imageName=imageName)
 
 
 class Post(models.Model):
-    user = models.ForeignKey(User, related_name="post", on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name="post",
+                             on_delete=models.CASCADE)
     body = models.CharField(max_length=50)
     image = models.ImageField(upload_to=image_upload, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)

@@ -7,8 +7,8 @@ from accounts.views import (
     auth_login,
     auth_register,
     auth_logout,
-
 )
+
 
 
 
@@ -19,6 +19,7 @@ urlpatterns = [
     path('register/', auth_register, name="register"),
     path('logout/', auth_logout, name='logout'),
     path('feed/', include("accounts.urls", namespace='feed' )),
+    path('donation/', include("donation.urls", namespace="donation")),
 ]
 
 if settings.DEBUG == True:

@@ -1,0 +1,12 @@
+{% load static %}
+<h1>Donate $1 for the sake of gaming community</h1>
+
+<form action="{% url 'donation:charge' %}" method="POST">
+{% csrf_token %}
+<script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+    data-key = "{{ key }}" 
+    data-desciption = "Donation towards the player"
+    data-amount = "100"
+    data-locale = auto>
+</script>
+</form>

@@ -1,4 +1,5 @@
 
+import sys
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -14,6 +15,9 @@ SECRET_KEY = os.environ['secret_key']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+STRIPE_SECRET_KEY = os.environ["STRIPE_SECRET_KEY"]
+STRIPE_PUBLISHABLE_KEY = os.environ["STRIPE_PUBLISHABLE_KEY"]
+
 ALLOWED_HOSTS = []
 
 
@@ -28,6 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts',
     'post',
+    'donation',
 ]
 
 MIDDLEWARE = [
@@ -40,8 +45,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-LOGOUT_URL = '/login'
-LOGIN_REDIRECT_URL = '/feed'
+
 ROOT_URLCONF = 'social.urls'
 
 TEMPLATES = [

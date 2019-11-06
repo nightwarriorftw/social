@@ -4,18 +4,20 @@
 {% block title %}Social{% endblock %}
 
 {% block content %}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-6">
-                <div class="shift left">
-                    <img src="{% static 'img/logo.svg' %}">
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="shift right">
-                    <img src="#">
-                </div>
-            </div>
-        </div>
-    </div>
+
+
+<header class="header" id="header">
+		<div class="container">
+			<figure class="logo animated fadeInDown">
+				<a href="#"><img src="{% static 'img/logo.svg' %}" alt=""></a>
+			</figure>
+			<h1 class="animated fadeInDown">Game On!</h1>
+			<ul class="we-create animated fadeInUp delay-1s">
+                <li>Connect, Share and Donate to the Gamers you love</li>
+                <br>
+				<li>For the Community, by the Community</li>
+			</ul>
+		</div>
+</header>
+
 {% endblock %}

@@ -12,9 +12,7 @@
     {% include 'base/navbar.html' with username=request.user.username %}
 
     <div class="spacing">
-      <div class="container">
         {% block content %}{% endblock %}
-      </div>
     </div>
     {% include 'base/js.html' %}
   </body>

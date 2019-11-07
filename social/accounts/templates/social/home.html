@@ -4,18 +4,52 @@
 {% block title %}Social{% endblock %}
 
 {% block content %}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-6">
-                <div class="shift left">
-                    <img src="{% static 'img/logo.svg' %}">
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="shift right">
-                    <img src="#">
-                </div>
-            </div>
-        </div>
-    </div>
+
+<!-- Header -->
+<header class="header" id="header">
+		<div class="container">
+			<figure class="logo animated fadeInDown">
+				<a href="#"><img src="{% static 'img/logo.svg' %}" alt=""></a>
+			</figure>
+			<h1 class="animated fadeInDown">Game On!</h1>
+			<ul class="we-create animated fadeInUp delay-1s">
+                <li>Connect, Share and Donate to the Gamers you love</li>
+                <br>
+				<li>For the Community, by the Community</li>
+			</ul>
+		</div>
+</header>
+<!--/Header-->
+
+
+<div class="container">
+		<section class="main-section contact" id="contact">
+
+			<div class="row">
+				<div class="col-lg-6 col-sm-7 wow fadeInLeft">
+					<div class="contact-info-box address clearfix">
+						<h3><i class=" icon-map-marker"></i>Address:</h3>
+						<span>Room No. 1143<br>ABB-3 Hostel - JIIT Noida</span>
+					</div>
+					<div class="contact-info-box phone clearfix">
+						<h3><i class="fa fa-phone"></i>Phone:</h3>
+						<span>00-00-00-00-00</span>
+					</div>
+					<div class="contact-info-box email clearfix">
+						<h3><i class="fa fa-pencil"></i>email:</h3>
+						<span>noreply@gmail.com</span>
+					</div>
+					<div class="contact-info-box hours clearfix">
+						<h3><i class="fa fa-clock-o"></i>Hours:</h3>
+						<span><strong>Monday-Friday</strong> Anytime<br><strong>Saturday - Sunday:</strong> Best not to ask.</span>
+					</div>
+					<ul class="social-link">
+						<li class="twitter"><a href="#"><i class="fa fa-twitter"></i></a></li>
+						<li class="facebook"><a href="#"><i class="fa fa-facebook"></i></a></li>
+						<li class="pinterest"><a href="#"><i class="fa fa-pinterest"></i></a></li>
+						<li class="gplus"><a href="#"><i class="fa fa-google-plus"></i></a></li>
+						<li class="dribbble"><a href="#"><i class="fa fa-dribbble"></i></a></li>
+					</ul>
+				</div>
+
 {% endblock %}

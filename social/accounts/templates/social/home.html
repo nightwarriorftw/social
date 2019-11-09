@@ -12,7 +12,7 @@
 				<a href="#"><img src="{% static 'img/logo.svg' %}" alt=""></a>
 			</figure>
 			<h1 class="animated fadeInDown">Game On!</h1>
-			<ul class="we-create animated fadeInUp delay-1s">
+			<ul class="we-create animated fadeInUp">
                 <li>Connect, Share and Donate to the Gamers you love</li>
                 <br>
 				<li>For the Community, by the Community</li>
@@ -21,12 +21,58 @@
 </header>
 <!--/Header-->
 
+<!--features-->
+<section class="feature-section">
+	<div class="container">
+		<div class="row">
+			<figure class="col-lg-5 col-sm-8 col-md-8">
+				<img src="{% static 'img/gaming1.jpeg' %}" alt="" class=" img-on-scroll show-on-scroll">
+			</figure>
+			<div class="col-lg-7 col-sm-4 col-md-4 featured-work">
+				<h2>Features</h2>
+				<P class="padding-b">We provide some cool features. Few of them are listed below.</P>
+				<div class="featured-box">
+					<div class="featured-box-col1 fadeInRight">
+						<i class="fa fa-link"></i>
+					</div>
+					<div class="featured-box-col2 fadeInRight">
+						<h3>Connect</h3>
+						<p>Follow the Gamer you love to watch and play with</p>
+					</div>
+				</div>
+				<div class="featured-box">
+					<div class="featured-box-col1 fadeInRight">
+						<i class="fa fa-share-alt"></i>
+					</div>
+					<div class="featured-box-col2 fadeInRight">
+						<h3>Share</h3>
+						<p>Share your insights and acheivements</p>
+					</div>
+				</div>
+				<div class="featured-box">
+					<div class="featured-box-col1 fadeInRight">
+						<i class="fa fa-gift"></i>
+					</div>
+					<div class="featured-box-col2 fadeInRight">
+						<h3>Donate</h3>
+						<p>Donate for the benefit of Gaming community</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!--End of features-->
 
-<div class="container">
-		<section class="main-section contact" id="contact">
 
+
+
+<!-- Contact -->
+
+	<section class="main-section contact" id="contact">
+		<div class="container">
 			<div class="row">
-				<div class="col-lg-6 col-sm-7 wow fadeInLeft">
+				<div class="col-lg-6 col-sm-7 fadeInLeft">
 					<div class="contact-info-box address clearfix">
 						<h3><i class=" icon-map-marker"></i>Address:</h3>
 						<span>Room No. 1143<br>ABB-3 Hostel - JIIT Noida</span>
@@ -46,10 +92,25 @@
 					<ul class="social-link">
 						<li class="twitter"><a href="#"><i class="fa fa-twitter"></i></a></li>
 						<li class="facebook"><a href="#"><i class="fa fa-facebook"></i></a></li>
-						<li class="pinterest"><a href="#"><i class="fa fa-pinterest"></i></a></li>
-						<li class="gplus"><a href="#"><i class="fa fa-google-plus"></i></a></li>
-						<li class="dribbble"><a href="#"><i class="fa fa-dribbble"></i></a></li>
 					</ul>
 				</div>
+				<div class="col-sm-5 col-lg-6 col-md-6">
+					<h1 style="text-align:center;margin-top: 50px;">Play fair and bold </h1>
+				</div>
+			</div>
+		</div>
+	</section>
+<!--End of Contact-->
+
+<section class="footer">
+	<div class="footer">
+		<div class="container">
+			
+		</div>
+	</div>
+</section>
+
+<script src="{% static 'js/show-on-scroll.js' %}"></script>
+
 
 {% endblock %}

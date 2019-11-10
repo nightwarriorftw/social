@@ -289,3 +289,37 @@ html {
 .submit-btn:hover{
 	box-shadow: 2px 2px 2px #55acee;
 }
+
+
+/* Sign in Form */
+.signupform-flex-container {
+	width: 100vw;
+	margin-top: 100px;
+	display: flex;
+	justify-content: center;
+	align-content: center;
+}
+
+
+.signupform-content-container {
+	width: 600px;
+	height: 500px;
+}
+.signupform-form-container {
+	width: 600px;
+	height: 700px;
+	margin-top: 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	border-radius: 30px;
+	background-color: #1f1f1f;
+}
+
+.signupform-header{
+	color: white;
+	font-size: 40px;
+	font-weight: 600;
+	font-family: sans-serif;
+}

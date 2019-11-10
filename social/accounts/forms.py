@@ -1,22 +1,23 @@
 from django import forms
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
 
 
 
 class SignInForm(forms.Form):
 
     username = forms.CharField(required=True, widget=forms.TextInput(
-        attrs={"class": "form-control", "placeholder": "Username"}))
+        attrs={"class": "input-details", "placeholder": "Username"}))
     password = forms.CharField(required=True, widget=forms.PasswordInput(
-        attrs={"class": "form-control", "placeholder": "Password"}))
+        attrs={"class": "input-details", "placeholder": "Password"}))
 
 
-class SignUpForm(UserCreationForm):
-
+class SignUpForm(forms.Form):
+    first_name = forms.CharField(required=True, widget=forms.TextInput())
+    last_name = forms.CharField(required=True, widget=forms.TextInput())
     email = forms.EmailField(required=True)
     user_name = forms.CharField(required=True, max_length=250)
-    
+    password1 = forms.CharField(required=True, widget=forms.PasswordInput())
+    password2 = forms.CharField(required=True, widget=forms.PasswordInput())
 
     class Meta:
         model = User
@@ -27,6 +28,28 @@ class SignUpForm(UserCreationForm):
                    'password1',
                    'password2'
                 )
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        user = User.objects.filter(username=username)
+        if user.exists():
+            raise forms.ValidationError("Username is taken")
+
+        return username
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        user = User.objects.filter(email=email)
+        if user.exists():
+            raise forms.ValidationError("Email is taken")
+        return email
+
+    def clean(self):
+        data = self.cleaned_data
+        password = self.cleaned_data.get('password')
+        password2 = self.cleaned_data.get('password2')
+        if password2 != password:
+            raise forms.ValidationError("Confirmation password is not correct")
 
     def save(self, commit=True):
         user = super(SignUpForm, self).save(commit=False)
@@ -40,4 +63,3 @@ class SignUpForm(UserCreationForm):
             user.save()
         
         return user
-    

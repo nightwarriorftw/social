@@ -2,30 +2,48 @@
 
 
 {% block title %}SignUp{% endblock %}
-
+{% load widget_tweaks %}
 {% block content %}
 <!-- SignUpForm -->
-{% if signupform.errors %}
-    {% for fields in signupform %}
-        {% for errors in fields.errors %}
-            {{error|escape}}
-        {% endfor %}
-    {% endfor %}
 
-    {% for errors in signupform.non_field_errors %}
-        {{ errors }}
-    {% endfor %}
-{% endif %}
 
-<form action="" method="POST">
-        {% csrf_token %}
-        First Name {{signupform.first_name}}<br>
-        Last Name {{signupform.last_name}}<br>
-        Username {{signupform.user_name}}<br>
-        Email {{signupform.email}}<br>
-        Password {{signupform.password1}}<br>
-        Password Again {{signupform.password2}}<br>
-        <button type="submit" class="btn btn-info" name="signupform">Signin</button>
-</form>
+<div class="signupform-flex-container ">
+    <div class="signupform-content-container">
+        <div class="signupform-form-container"> 
+            <div class="wrong">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <strong>{{message}}</strong>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+
+
+            <form action="" method="POST">
+                    {% csrf_token %}
+                    <h1 class="signupform-header">Signup</h1><br><br>
+                    <span class="subtitle">Firstname</span><br>
+                        {{form.first_name|add_class:'input-details'}}<br>
+                    <span class="subtitle">Lastname</span><br>
+                        {{form.last_name|add_class:'input-details'}}<br>
+                    <span class="subtitle">Email</span><br>
+                        {{form.email|add_class:'input-details'}}<br>
+                    <span class="subtitle">Username</span><br>
+                        {{form.user_name|add_class:'input-details'}}<br>
+                    <span class="subtitle">Password</span><br>
+                        {{form.password1|add_class:'input-details'}}<br>
+                    <span class="subtitle">Confirm Password</span><br>
+                        {{form.password2|add_class:'input-details'}}<br>
+                    <button type="submit" class="submit-btn">Sign-In</button>
+            </form>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

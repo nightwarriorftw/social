@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'accounts',
     'post',
     'donation',
+    'widget_tweaks'
 ]
 
 MIDDLEWARE = [

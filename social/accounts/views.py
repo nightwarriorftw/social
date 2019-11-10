@@ -44,23 +44,20 @@ def auth_register(request):
         return redirect('/')
 
     if request.method == "POST":
-        if "signupform" in request.POST:
             form = SignUpForm(request.POST)
             
             if form.is_valid():
                 form.save()
                 messages.success(request, 'Successfully Signed In')
                 print('User created')
-                return redirect("/login")
+                return redirect(reverse('login')) 
             else:
-                messages.error(request, "Internal Server Error")
-                return redirect("/register")
+                return redirect(reverse('register')) 
 
-    else:
-        form = SignUpForm(None)
+    form = SignUpForm()
 
     context = {
-        "signupform": form
+        "form": form
     }
 
     return render(request, "auth/register.html", context)

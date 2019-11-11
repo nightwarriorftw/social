@@ -9,7 +9,6 @@
 
 <div class="signupform-flex-container ">
     <div class="signupform-content-container">
-        <div class="signupform-form-container"> 
             <div class="wrong">
                 {% if messages %}
                     {% for message in messages %}
@@ -24,23 +23,23 @@
             </div>
 
 
-
-            <form action="" method="POST">
+        <div class="signupform-form-container"> 
+            <form action="{% url 'register' %}" method="POST">
                     {% csrf_token %}
                     <h1 class="signupform-header">Signup</h1><br><br>
-                    <span class="subtitle">Firstname</span><br>
-                        {{form.first_name|add_class:'input-details'}}<br>
-                    <span class="subtitle">Lastname</span><br>
-                        {{form.last_name|add_class:'input-details'}}<br>
-                    <span class="subtitle">Email</span><br>
-                        {{form.email|add_class:'input-details'}}<br>
-                    <span class="subtitle">Username</span><br>
-                        {{form.user_name|add_class:'input-details'}}<br>
-                    <span class="subtitle">Password</span><br>
-                        {{form.password1|add_class:'input-details'}}<br>
-                    <span class="subtitle">Confirm Password</span><br>
-                        {{form.password2|add_class:'input-details'}}<br>
-                    <button type="submit" class="submit-btn">Sign-In</button>
+                    {% for field in form %}
+                        <p>
+                        <span class="subtitle">{{field.label_tag}}</span><br>
+                        {{field|add_class:'input-details'}}
+                        {% if field.help_text %}
+                            <small style="display:none;">{{filed.help_text}}</small>
+                        {% endif %}
+                        
+                        {% for error in field.errors %}
+                            <p style="color:red;">{{error|escape}}</p>
+                        {% endfor %}
+                    {% endfor %}
+                    <br><button type="submit" class="submit-btn" name="signupform" value="signupform">Sign-In</button>
             </form>
         </div>
     </div>

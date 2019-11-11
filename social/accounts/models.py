@@ -8,6 +8,7 @@ from .utils import random_player_id_generator
 
 class Profiles(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE)
+    is_active = models.BooleanField(default=False)
     followed_to = models.ManyToManyField('self', related_name='followed_by', symmetrical=False)
     
     def __str__(self):

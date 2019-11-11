@@ -5,7 +5,7 @@ from .views import (
     follows_list,
     followers_list,
     follows,
-    stop_follow
+    stop_follow,
 )
 
 app_name = 'accounts'
@@ -16,5 +16,5 @@ urlpatterns = [
     path('<str:username>/followed_to', follows_list, name='follow_list'),
     path('<str:username>/followed_by', followers_list, name='followers_list'),
     path('<str:username>/follows', follows, name='follows'),
-    path('<str:username>/stop_follow', stop_follow, name='stop_follow')
+    path('<str:username>/stop_follow', stop_follow, name='stop_follow'),
 ]

@@ -303,11 +303,11 @@ html {
 
 .signupform-content-container {
 	width: 600px;
-	height: 500px;
+	height: 900px;
 }
 .signupform-form-container {
 	width: 600px;
-	height: 700px;
+	height: 900px;
 	margin-top: 20px;
 	display: flex;
 	flex-direction: column;

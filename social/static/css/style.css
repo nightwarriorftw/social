@@ -323,3 +323,46 @@ html {
 	font-weight: 600;
 	font-family: sans-serif;
 }
+
+
+/* profile */
+.outer-section {
+	background-color: #777777;
+	height:100%;
+	width:100%;
+	background:url('../img/maze.png') left top repeat;
+}
+.avatar {
+	margin-top:20px;
+	border-radius: 50%;
+	align-content: center;
+}
+
+.name {
+	margin-top: 20px;
+	text-align: center;
+	color: White;
+}
+
+.username {
+	margin-top: 5px;
+	text-align: center;
+	color: White;
+}
+
+.mid-line {
+	border-left: 6px solid white;
+	  height: 100px;
+	  margin-top: -10px;
+}
+
+.follow-button{
+	align-items: center;
+	text-align: center;
+	margin-top: 10px;
+}
+
+.donate-button{
+	text-align:center;
+	margin-top: 5px;
+}

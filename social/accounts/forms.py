@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from .models import Profiles
 
 
 class SignInForm(forms.Form):
@@ -19,6 +20,7 @@ class SignUpForm(UserCreationForm):
     password1 = forms.CharField(required=True, widget=forms.PasswordInput())
     password2 = forms.CharField(required=True, widget=forms.PasswordInput())
 
+
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'username', 'email', 'password1', 'password2')
@@ -30,7 +32,7 @@ class SignUpForm(UserCreationForm):
         user.last_name=self.cleaned_data['last_name']
         user.email=self.cleaned_data['email']
         user.username=self.cleaned_data['username']
-
+       
         if commit:
 
             user.save()

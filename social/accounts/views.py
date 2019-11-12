@@ -24,7 +24,10 @@ def home(request):
 
 
 def auth_login(request):
-
+    if request.user.is_authenticated:
+        username = request.user.username
+        return redirect(reverse('accounts:feed'))
+    
     if request.method == "POST":
         form = SignInForm(request.POST)
 
@@ -48,8 +51,12 @@ def auth_login(request):
 
 
 def auth_register(request):
+    if request.user.is_authenticated:
+        username = request.user.username
+        return redirect(reverse('accounts:feed'))
+        
     if request.method == "POST":
-        form = SignUpForm(request.POST)
+        form = SignUpForm(request.POST, request.FILES)
 
         if form.is_valid():
             user = form.save(commit=False)
@@ -66,7 +73,8 @@ def auth_register(request):
             to_email = form.cleaned_data.get('email')
             email = EmailMessage(mail_subject, message, to=[to_email])
             email.send()
-            return HttpResponse("Please confirm your Email address to complete the registration")
+            messages.info(request, "Please confirm your Email address to complete the registration")
+            return redirect(reverse('register'))
 
     else:
         form = SignUpForm()
@@ -99,16 +107,16 @@ def auth_logout(request):
     logout(request)
     return redirect('/login')
 
-
+@login_required
 def show_profile(request, username):
     if request.user.is_authenticated:
         user = User.objects.get(username=username)
-
-    else:
-        user = None
-        return redirect("{% url 'accounts:login' %}")
-
-    return render(request, 'profile/user.html', {"user": user})
+        post = Post.objects.filter(user=user)
+        context = {
+            "user": user,
+            "post": post
+        }
+    return render(request, 'profile/user.html', context)
 
 
 @login_required
@@ -128,7 +136,13 @@ def feed(request):
             print(error)
     username = request.user.username
     user = User.objects.get(username=username)
-    post = Post.objects.filter(user=user)
+    userId = []
+    for id in request.user.profile.followed_to.all():
+        userId.append(id.id)
+    userId.append(request.user.id)
+    print(userId)
+    post = Post.objects.filter(user_id__in=userId)[0:25]
+    print(post.count())
     context = {
         "user": user,
         "post": post,

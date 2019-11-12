@@ -289,3 +289,80 @@ html {
 .submit-btn:hover{
 	box-shadow: 2px 2px 2px #55acee;
 }
+
+
+/* Sign in Form */
+.signupform-flex-container {
+	width: 100vw;
+	margin-top: 100px;
+	display: flex;
+	justify-content: center;
+	align-content: center;
+}
+
+
+.signupform-content-container {
+	width: 600px;
+	height: 900px;
+}
+.signupform-form-container {
+	width: 600px;
+	height: 900px;
+	margin-top: 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	border-radius: 30px;
+	background-color: #1f1f1f;
+}
+
+.signupform-header{
+	color: white;
+	font-size: 40px;
+	font-weight: 600;
+	font-family: sans-serif;
+}
+
+
+/* profile */
+.outer-section {
+	background-color: #777777;
+	height:100%;
+	width:100%;
+	background:url('../img/maze.png') left top repeat;
+}
+.avatar {
+	margin-top:20px;
+	border-radius: 50%;
+	align-content: center;
+}
+
+.name {
+	margin-top: 20px;
+	text-align: center;
+	color: White;
+}
+
+.username {
+	margin-top: 5px;
+	text-align: center;
+	color: White;
+}
+
+.mid-line {
+	border-left: 6px solid white;
+	  height: 100px;
+	  margin-top: -10px;
+}
+
+.follow-button{
+	align-items: center;
+	text-align: center;
+	margin-top: 10px;
+}
+
+.donate-button{
+	text-align:center;
+	margin-top: 5px;
+}

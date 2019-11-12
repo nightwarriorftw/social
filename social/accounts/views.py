@@ -7,6 +7,14 @@ from django.contrib.auth.decorators import login_required
 from post.forms import AddPost
 from post.models import Post
 
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_text
+from .utils import account_activation_token
+from django.core.mail import EmailMessage
+from django.http import HttpResponse
+
 
 def home(request):
     if request.user.is_authenticated:
@@ -16,7 +24,10 @@ def home(request):
 
 
 def auth_login(request):
-
+    if request.user.is_authenticated:
+        username = request.user.username
+        return redirect(reverse('accounts:feed'))
+    
     if request.method == "POST":
         form = SignInForm(request.POST)
 
@@ -41,29 +52,54 @@ def auth_login(request):
 
 def auth_register(request):
     if request.user.is_authenticated:
-        return redirect('/')
-
+        username = request.user.username
+        return redirect(reverse('accounts:feed'))
+        
     if request.method == "POST":
-        if "signupform" in request.POST:
-            form = SignUpForm(request.POST)
-            
-            if form.is_valid():
-                form.save()
-                messages.success(request, 'Successfully Signed In')
-                print('User created')
-                return redirect("/login")
-            else:
-                messages.error(request, "Internal Server Error")
-                return redirect("/register")
+        form = SignUpForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.is_active = False
+            user.save()
+            current_site = get_current_site(request)
+            mail_subject = 'Activate your Social account'
+            message = render_to_string('acc_active_email.html', {
+                'user': user,
+                'domain': current_site.domain,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'token': account_activation_token.make_token(user)
+            })
+            to_email = form.cleaned_data.get('email')
+            email = EmailMessage(mail_subject, message, to=[to_email])
+            email.send()
+            messages.info(request, "Please confirm your Email address to complete the registration")
+            return redirect(reverse('register'))
 
     else:
-        form = SignUpForm(None)
+        form = SignUpForm()
 
     context = {
-        "signupform": form
+        "form": form
     }
 
     return render(request, "auth/register.html", context)
+
+
+def activate(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError, User.DoesNotExist, ValueError, OverflowError):
+        user = None
+    
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active=True
+        user.save()
+        login(request, user)
+        return HttpResponse('Thank You for confirming. You can now login.')
+    else:
+        return HttpResponse('Activation link is invalid')
 
 
 @login_required
@@ -71,16 +107,16 @@ def auth_logout(request):
     logout(request)
     return redirect('/login')
 
-
+@login_required
 def show_profile(request, username):
     if request.user.is_authenticated:
         user = User.objects.get(username=username)
-
-    else:
-        user = None
-        return redirect("{% url 'accounts:login' %}")
-
-    return render(request, 'profile/user.html', {"user": user})
+        post = Post.objects.filter(user=user)
+        context = {
+            "user": user,
+            "post": post
+        }
+    return render(request, 'profile/user.html', context)
 
 
 @login_required
@@ -100,7 +136,13 @@ def feed(request):
             print(error)
     username = request.user.username
     user = User.objects.get(username=username)
-    post = Post.objects.filter(user=user)
+    userId = []
+    for id in request.user.profile.followed_to.all():
+        userId.append(id.id)
+    userId.append(request.user.id)
+    print(userId)
+    post = Post.objects.filter(user_id__in=userId)[0:25]
+    print(post.count())
     context = {
         "user": user,
         "post": post,

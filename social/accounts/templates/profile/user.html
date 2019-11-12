@@ -1,28 +1,66 @@
 {% extends 'base.html' %}
-
+{% load static %}
 
 {% block title %}{{ user.username}}{% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row">
-        <strong>@{{ user.username }}</strong><br>
-        <strong>Name</strong>:{{ user.first_name }}&nbsp{{user.last_name}}<br>
-        <strong>Email</strong>:{{ user.email}}<br>
-        <strong>Username</strong>:{{ user.username}}<br>
-    </div>
-    <div class="row">
-        {% if user.username != request.user.username %}
-
-            {% if  request.user.profile in user.profile.followed_by.all %}
-                <a href="{% url 'accounts:stop_follow' user.username %}" class="btn btn-info">Unfollow</a>
-            {% else %}
-                <a href="{% url "accounts:follows" user.username %}" class="btn btn-info">Follow</button></a>
-            {% endif %}
-        {% endif %}
-    </div>
-    <div class="row">
-        <a href="{% url 'donation:donation' %}"><button class="btn btn-danger">Donate and Support</button></a>
+<div class="outer-section">
+    <div class="container">
+        <div class="row">
+            <div class="mx-auto">
+                {% if user.profile.avatar %}
+                    <span class="avatar">{{ user.profile.avatar.url }}</span>
+                {% else %}
+                    <img src="{% static 'img/demo_avatar.png' %}" class="avatar"> 
+                {% endif %}
+                <div class="name">
+                    {{ user.first_name }}&nbsp{{ user.last_name}}
+                </div>
+                <div class="username">
+                    @{{ user.username }}
+                </div>
+                <div class="follow-button">
+                    {% if user.username != request.user.username %}
+                        {% if  request.user.profile in user.profile.followed_by.all %}
+                            <a href="{% url 'accounts:stop_follow' user.username %}" class="btn btn-info">Unfollow</a>
+                        {% else %}
+                            <a href="{% url "accounts:follows" user.username %}" class="btn btn-info">Follow</button></a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+                <div class="donate-button">
+                    <a href="{% url 'donation:donation' %}"><button class="btn btn-danger">Donate and Support</button></a>
+                </div>
+            </div>
+        </div>
+        <hr style="border: solid 2px white;">
+        <div class="row">
+            <div class="mx-auto" style="margin-top: 20px;">
+                <span style="color: white; text-align:center;">
+                    Followers<br>
+                    {{ user.profile.followed_by.count }}
+                </span>
+            </div>
+            <div class="mid-line"></div>
+            <div class="mx-auto" style="margin-top: 10px;">
+                <span style="color:white;">
+                    Following<br>
+                    {{ user.profile.followed_to.count }}
+                </span>
+            </div>
+        </div>
     </div>
 </div>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-6 mx-auto">
+            {% for posts in post %}
+                {% include 'social/post.html' with post=posts user=user %}
+                <br>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
 {% endblock %}

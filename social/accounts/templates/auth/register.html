@@ -2,30 +2,47 @@
 
 
 {% block title %}SignUp{% endblock %}
-
+{% load widget_tweaks %}
 {% block content %}
 <!-- SignUpForm -->
-{% if signupform.errors %}
-    {% for fields in signupform %}
-        {% for errors in fields.errors %}
-            {{error|escape}}
-        {% endfor %}
-    {% endfor %}
 
-    {% for errors in signupform.non_field_errors %}
-        {{ errors }}
-    {% endfor %}
-{% endif %}
 
-<form action="" method="POST">
-        {% csrf_token %}
-        First Name {{signupform.first_name}}<br>
-        Last Name {{signupform.last_name}}<br>
-        Username {{signupform.user_name}}<br>
-        Email {{signupform.email}}<br>
-        Password {{signupform.password1}}<br>
-        Password Again {{signupform.password2}}<br>
-        <button type="submit" class="btn btn-info" name="signupform">Signin</button>
-</form>
+<div class="signupform-flex-container ">
+    <div class="signupform-content-container">
+            <div class="wrong">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <strong>{{message}}</strong>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+
+        <div class="signupform-form-container"> 
+            <form action="{% url 'register' %}" method="POST">
+                    {% csrf_token %}
+                    <h1 class="signupform-header">Signup</h1><br><br>
+                    {% for field in form %}
+                        <p>
+                        <span class="subtitle">{{field.label_tag}}</span><br>
+                        {{field|add_class:'input-details'}}
+                        {% if field.help_text %}
+                            <small style="display:none;">{{filed.help_text}}</small>
+                        {% endif %}
+                        
+                        {% for error in field.errors %}
+                            <p style="color:red;">{{error|escape}}</p>
+                        {% endfor %}
+                    {% endfor %}
+                    <br><button type="submit" class="submit-btn" name="signupform" value="signupform">Sign-In</button>
+            </form>
+        </div>
+    </div>
+</div>
 
 {% endblock %}

@@ -7,6 +7,7 @@ from accounts.views import (
     auth_login,
     auth_register,
     auth_logout,
+    activate,
 )
 
 
@@ -20,6 +21,7 @@ urlpatterns = [
     path('logout/', auth_logout, name='logout'),
     path('feed/', include("accounts.urls", namespace='feed' )),
     path('donation/', include("donation.urls", namespace="donation")),
+    path('activate/<uidb64>/<token>/', activate, name='activate'),
 ]
 
 if settings.DEBUG == True:

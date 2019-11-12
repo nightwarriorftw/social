@@ -20,6 +20,15 @@ STRIPE_PUBLISHABLE_KEY = os.environ["STRIPE_PUBLISHABLE_KEY"]
 
 ALLOWED_HOSTS = []
 
+# Email Verification
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'balibuachod@gmail.com'
+EMAIL_HOST_PASSWORD = os.environ['email_host_password']
+EMAIL_PORT = 587
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 
 # Application definition
 
@@ -33,7 +42,12 @@ INSTALLED_APPS = [
     'accounts',
     'post',
     'donation',
+    'widget_tweaks',
+    'django.contrib.sites',
 ]
+
+SITE_ID = 1
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -124,8 +138,10 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
 
-STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static_cdn', 'static_root')
+STATIC_ROOT = os.path.join(os.path.dirname(
+    BASE_DIR), 'static_cdn', 'static_root')
 
 MEDIA_URL = '/media/'
 
-MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static_cdn', 'media_root')
+MEDIA_ROOT = os.path.join(os.path.dirname(
+    BASE_DIR), 'static_cdn', 'media_root')

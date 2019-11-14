@@ -25,6 +25,7 @@ class Post(models.Model):
     body = models.CharField(max_length=50)
     image = models.ImageField(upload_to=image_upload, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    update_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ["-created_at"]

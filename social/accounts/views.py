@@ -6,6 +6,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from post.forms import AddPost
 from post.models import Post
+from django.shortcuts import get_object_or_404
+from django.db.models import Q
 
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
@@ -27,7 +29,7 @@ def auth_login(request):
     if request.user.is_authenticated:
         username = request.user.username
         return redirect(reverse('accounts:feed'))
-    
+
     if request.method == "POST":
         form = SignInForm(request.POST)
 
@@ -54,7 +56,7 @@ def auth_register(request):
     if request.user.is_authenticated:
         username = request.user.username
         return redirect(reverse('accounts:feed'))
-        
+
     if request.method == "POST":
         form = SignUpForm(request.POST, request.FILES)
 
@@ -73,7 +75,8 @@ def auth_register(request):
             to_email = form.cleaned_data.get('email')
             email = EmailMessage(mail_subject, message, to=[to_email])
             email.send()
-            messages.info(request, "Please confirm your Email address to complete the registration")
+            messages.info(
+                request, "Please confirm your Email address to complete the registration")
             return redirect(reverse('register'))
 
     else:
@@ -92,9 +95,9 @@ def activate(request, uidb64, token):
         user = User.objects.get(pk=uid)
     except(TypeError, User.DoesNotExist, ValueError, OverflowError):
         user = None
-    
+
     if user is not None and account_activation_token.check_token(user, token):
-        user.is_active=True
+        user.is_active = True
         user.save()
         login(request, user)
         return HttpResponse('Thank You for confirming. You can now login.')
@@ -106,6 +109,7 @@ def activate(request, uidb64, token):
 def auth_logout(request):
     logout(request)
     return redirect('/login')
+
 
 @login_required
 def show_profile(request, username):
@@ -135,16 +139,22 @@ def feed(request):
         else:
             print(error)
     username = request.user.username
-    user = User.objects.get(username=username)
-    userId = []
-    for id in request.user.profile.followed_to.all():
-        userId.append(id.id)
+    user_r = get_object_or_404(User, username=username)
+
+    # """
+    #     This is to fetch the tweets of the users you follow
+    # """
+    userId=[]
+    ft = request.user.profile.followed_to.all()
+    for profiles in ft:
+        userId.append(profiles.user_id)
     userId.append(request.user.id)
     print(userId)
-    post = Post.objects.filter(user_id__in=userId)[0:25]
-    print(post.count())
+    
+    post = Post.objects.filter(Q(user_id__in=userId)).order_by('-created_at')
+    print(post)
     context = {
-        "user": user,
+        "user": user_r,
         "post": post,
         "form": form
     }
@@ -155,7 +165,6 @@ def feed(request):
 def follows_list(request, username):
     user = User.objects.get(username=username)
     followed_to = user.profile.followed_to.all()
-    print(followed_to)
     return render(request, 'profile/follow_list.html', {"user": followed_to})
 
 
@@ -163,7 +172,6 @@ def follows_list(request, username):
 def followers_list(request, username):
     user = User.objects.get(username=username)
     followed_by = user.profile.followed_by.all()
-    print(followed_by)
     return render(request, 'profile/followers_list.html', {"user": followed_by})
 
 
@@ -171,7 +179,6 @@ def followers_list(request, username):
 def follows(request, username):
     user = User.objects.get(username=username)
     request.user.profile.followed_to.add(user.profile)
-
     return redirect(reverse("accounts:profile", kwargs={"username": username}))
 
 
@@ -179,5 +186,4 @@ def follows(request, username):
 def stop_follow(request, username):
     user = User.objects.get(username=username)
     request.user.profile.followed_to.remove(user.profile)
-
     return redirect(reverse("accounts:profile", kwargs={"username": username}))

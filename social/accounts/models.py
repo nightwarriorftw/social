@@ -2,8 +2,9 @@ import os
 import random
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models.signals import pre_save
+from django.db.models.signals import pre_save, post_save
 from .utils import random_player_id_generator
+from django.dispatch import receiver
 
 
 def get_filename(filename):
@@ -21,7 +22,8 @@ def add_avatar(instance, filename):
 
 
 class Profiles(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, related_name='profile')
     is_active = models.BooleanField(default=False)
     followed_to = models.ManyToManyField(
         'self', related_name='followed_by', symmetrical=False)
@@ -30,10 +32,13 @@ class Profiles(models.Model):
     def __str__(self):
         return self.user.username
 
-# def player_id_creation(sender, instance, *args, **kwargs):
-#     if not instance.player_id:
-#         instance.player_id = random_player_id_generator()
 
-# pre_save.connect(player_id_creation, sender=Profiles)
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, *args, **kwargs):
+    if created:
+        Profiles.objects.create(user=instance)
 
-User.profile = property(lambda u: Profiles.objects.get_or_create(user=u)[0])
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, *args, **kwargs):
+    instance.profile.save()

@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="col-6">
-        {% for p in post %}
+            {% for p in post %}
                 <div class="card">
                     <div class="card-body">
                         <span class="card-title">{{ p.user.first_name }}&nbsp{{ p.user.last_name }}</span><h6><span style="font-size: 10px;"><a href="{% url "accounts:profile" p.user.username %}">@{{ p.user.username }}</a></span></h6>
@@ -26,6 +26,9 @@
                     {% endif %}
                     <hr/>
                     <span class="space" style="margin-bottom: 30px;"></span>
+                    <div id="like-section">
+                        {% include 'snippets/post_like.html' %}
+                    </div>
                 </div>
                 <br>
             {% endfor %}

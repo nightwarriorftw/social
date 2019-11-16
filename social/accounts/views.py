@@ -15,7 +15,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_text
 from .utils import account_activation_token
 from django.core.mail import EmailMessage
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 
 
 def home(request):
@@ -125,7 +125,7 @@ def show_profile(request, username):
 
 @login_required
 def feed(request):
-    form = AddPost()
+
     if request.method == "POST":
         form = AddPost(request.POST, request.FILES)
         if form.is_valid():
@@ -136,31 +136,56 @@ def feed(request):
                 instance.image = form.cleaned_data['image']
             instance.save()
             return redirect(reverse("accounts:feed"))
-        else:
-            print(error)
-    username = request.user.username
-    user_r = get_object_or_404(User, username=username)
 
-    # """
-    #     This is to fetch the tweets of the users you follow
-    # """
-    userId=[]
-    ft = request.user.profile.followed_to.all()
-    for profiles in ft:
+    else:
+        form = AddPost()
+
+    username = request.user.username
+    user = get_object_or_404(User, username=username)
+
+    # Implementation of seeing posts of the gamers one user follow
+    userId = []
+    follow_list = request.user.profile.followed_to.all()
+
+    for profiles in follow_list:
         userId.append(profiles.user_id)
+
     userId.append(request.user.id)
-    print(userId)
-    
+
     post = Post.objects.filter(Q(user_id__in=userId)).order_by('-created_at')
-    print(post)
+
     context = {
-        "user": user_r,
+        "user": user,
         "post": post,
         "form": form
     }
     return render(request, "social/feed.html", context)
 
 
+@login_required
+def like_post(request):
+    post = get_object_or_404(Post, pk=request.POST.get('id'))
+    is_liked = False
+    if post.likes.filter(id=request.user.id).exist():
+        post.likes.remove(request.user)
+        is_liked = True
+    else:
+        post.likes.add(request.user)
+        is_liked = True
+    context = {
+        "user": request.user,
+        "post": post,
+        "is_liked": is_liked,
+        "total_likes": post.total_likes
+    }
+
+    if request.is_ajax():
+        html = render_to_string("snippets/post_like.html",
+                                context, request=self.request)
+        prin(html)
+        return JsonResponse({"form": html})
+
+2
 @login_required
 def follows_list(request, username):
     user = User.objects.get(username=username)

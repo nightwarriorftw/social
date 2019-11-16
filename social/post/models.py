@@ -22,13 +22,17 @@ def image_upload(instance, filename):
 class Post(models.Model):
     user = models.ForeignKey(User, related_name="post",
                              on_delete=models.CASCADE)
-    body = models.CharField(max_length=50)
+    body = models.CharField(max_length=500)
     image = models.ImageField(upload_to=image_upload, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)
+    likes = models.ManyToManyField(User, related_name='likes', blank=True)
 
     class Meta:
         ordering = ["-created_at"]
 
     def __str__(self):
         return self.user.username
+
+    def total_likes(self):
+        return self.likes.count()

@@ -7,15 +7,17 @@ $(document).ready( function(event){
         console.log(pk);
         $.ajax({
             type: 'POST',
-            url : '{% url "feed:like_post" %}/',
+            url : "like/",
             data: {
                 "id": pk,
                 'csrfmiddlewaretoken': csrftoken
             },
             dataType: 'json',
             success: function(response){
-                $("#like-section").html(response['form']);
-                console.log("Like/Dislike section done")
+                $("#like-section").html(response["total_likes"])
+                console.log(
+                    $("#like-section").html(response["total_likes"])
+                )
             },
             error: function(rs, e){
                 console.log(rs.responseText);

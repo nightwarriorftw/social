@@ -1,6 +1,7 @@
+{{total_likes}} Likes{{total_likes|pluralize}}
 {% if user.is_authenticated %}
-    <form method="POST" action="{% url 'feed:like_post' %}">
-    {{total_likes}}
+   
+    <form method="POST" action="{% url 'feed:like' %}">
         {% csrf_token %}
         {% if is_liked %}
             <button type="submit" id="like" value="{{p.id}}" name="post_id" class="btn btn-danger">Dislike</button>

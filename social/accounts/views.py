@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.models import User
 from .forms import SignInForm, SignUpForm
@@ -163,29 +164,34 @@ def feed(request):
 
 
 @login_required
-def like_post(request):
-    post = get_object_or_404(Post, pk=request.POST.get('id'))
-    is_liked = False
-    if post.likes.filter(id=request.user.id).exist():
-        post.likes.remove(request.user)
-        is_liked = True
-    else:
-        post.likes.add(request.user)
-        is_liked = True
+def like(request):
+    print("I am here")
+    if request.method == "POST":
+        id = request.POST.get("id", None)
+        print(id)
+        user = request.user
+        post = get_object_or_404(Post, id=id)
+        is_liked = False
+        if post.likes.filter(id=user.id).exists():
+            post.likes.remove(user)
+            post.save()
+            print('User not liked a post') 
+            is_liked = True
+        else:
+            post.likes.add(user)
+            post.save()
+            print('User liked the post')
+            is_liked = True
+    print(post.likes.all())
     context = {
-        "user": request.user,
-        "post": post,
-        "is_liked": is_liked,
-        "total_likes": post.total_likes
+        "total_likes": post.total_likes,
+        "is_liked": is_liked
     }
-
     if request.is_ajax():
-        html = render_to_string("snippets/post_like.html",
-                                context, request=self.request)
-        prin(html)
-        return JsonResponse({"form": html})
+            html = render_to_string("snippets/post_like.html", context, request=request)
+    return JsonResponse({"like_form": html})
 
-2
+
 @login_required
 def follows_list(request, username):
     user = User.objects.get(username=username)

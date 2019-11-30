@@ -366,3 +366,20 @@ html {
 	text-align:center;
 	margin-top: 5px;
 }
+
+/* Login */
+
+.signinform-form-container {
+	width: 500px;
+	height: 500px;
+	margin-top: 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	border-radius: 30px;
+	background-color: #1f1f1f;
+}
+.signinform-form-container h1 {
+	color: white;
+}

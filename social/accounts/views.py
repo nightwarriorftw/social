@@ -106,13 +106,13 @@ def activate(request, uidb64, token):
         return HttpResponse('Activation link is invalid')
 
 
-@login_required
+@login_required(login_url="/login/")
 def auth_logout(request):
     logout(request)
     return redirect('/login')
 
 
-@login_required
+@login_required(login_url="/login/")
 def show_profile(request, username):
     if request.user.is_authenticated:
         user = User.objects.get(username=username)
@@ -124,7 +124,7 @@ def show_profile(request, username):
     return render(request, 'profile/user.html', context)
 
 
-@login_required
+@login_required(login_url="/login/")
 def feed(request):
 
     if request.method == "POST":
@@ -163,7 +163,7 @@ def feed(request):
     return render(request, "social/feed.html", context)
 
 
-@login_required
+@login_required(login_url="/login/")
 def like(request):
     print("I am here")
     if request.method == "POST":
@@ -175,13 +175,14 @@ def like(request):
         if post.likes.filter(id=user.id).exists():
             post.likes.remove(user)
             post.save()
-            print('User not liked a post') 
+            print('User disliked the post') 
             is_liked = True
         else:
             post.likes.add(user)
             post.save()
             print('User liked the post')
             is_liked = True
+
     print(post.likes.all())
     context = {
         "total_likes": post.total_likes,
@@ -192,28 +193,28 @@ def like(request):
     return JsonResponse({"like_form": html})
 
 
-@login_required
+@login_required(login_url="/login/")
 def follows_list(request, username):
     user = User.objects.get(username=username)
     followed_to = user.profile.followed_to.all()
     return render(request, 'profile/follow_list.html', {"user": followed_to})
 
 
-@login_required
+@login_required(login_url="/login/")
 def followers_list(request, username):
     user = User.objects.get(username=username)
     followed_by = user.profile.followed_by.all()
     return render(request, 'profile/followers_list.html', {"user": followed_by})
 
 
-@login_required
+@login_required(login_url="/login/")
 def follows(request, username):
     user = User.objects.get(username=username)
     request.user.profile.followed_to.add(user.profile)
     return redirect(reverse("accounts:profile", kwargs={"username": username}))
 
 
-@login_required
+@login_required(login_url="/login/")
 def stop_follow(request, username):
     user = User.objects.get(username=username)
     request.user.profile.followed_to.remove(user.profile)

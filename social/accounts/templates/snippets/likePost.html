@@ -1,0 +1,9 @@
+Total Likes: {{total_likes}}
+{% if request.user.is_authenticated %}
+    <form action="{% url 'feed:likePost' p.id %}" method="POST">
+    {% if p.is_liked %}
+        <button class="btn btn-error" name="id" value="{{p.id}}">Dislike</button>
+    {% else %}
+        <button class="btn btn-success" name="id" value="{{p.id}}">Like</button>
+    {% endif %}
+{% endif %}

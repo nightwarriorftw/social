@@ -6,14 +6,16 @@ from .views import (
     followers_list,
     follows,
     stop_follow,
-    like
+    postLikeToggle,
+    PostDetails
 )
 
 app_name = 'accounts'
 
 urlpatterns = [
     path('', feed, name='feed'),
-    path('like/', like, name='like'),
+    path('<int:id>/', PostDetails , name='postDetails'),  
+    path('like/<id>/', postLikeToggle, name='likePost'),
     path('<str:username>/', show_profile, name="profile"),
     path('<str:username>/followed_to', follows_list, name='follow_list'),
     path('<str:username>/followed_by', followers_list, name='followers_list'),

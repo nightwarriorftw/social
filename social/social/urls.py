@@ -9,7 +9,7 @@ from accounts.views import (
     auth_logout,
     activate,
 )
-from accounts.views import like
+
 
 
 

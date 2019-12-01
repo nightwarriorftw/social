@@ -16,8 +16,9 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_text
 from .utils import account_activation_token
 from django.core.mail import EmailMessage
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, Http404
 
+from django.views.generic import DetailView
 
 def home(request):
     if request.user.is_authenticated:
@@ -144,6 +145,7 @@ def feed(request):
     username = request.user.username
     user = get_object_or_404(User, username=username)
 
+
     # Implementation of seeing posts of the gamers one user follow
     userId = []
     follow_list = request.user.profile.followed_to.all()
@@ -158,39 +160,44 @@ def feed(request):
     context = {
         "user": user,
         "post": post,
-        "form": form
+        "form": form,
     }
+
     return render(request, "social/feed.html", context)
 
 
-@login_required(login_url="/login/")
-def like(request):
-    print("I am here")
-    if request.method == "POST":
-        id = request.POST.get("id", None)
-        print(id)
-        user = request.user
-        post = get_object_or_404(Post, id=id)
-        is_liked = False
-        if post.likes.filter(id=user.id).exists():
-            post.likes.remove(user)
-            post.save()
-            print('User disliked the post') 
-            is_liked = True
-        else:
-            post.likes.add(user)
-            post.save()
-            print('User liked the post')
-            is_liked = True
-
-    print(post.likes.all())
+@login_required(login_url='login')
+def PostDetails(request, id):
+    post = get_object_or_404(Post, pk=id)
     context = {
-        "total_likes": post.total_likes,
+        "post": post
+    }
+    return render(request, "social/post.html", context)
+
+
+@login_required(login_url='login')
+def postLikeToggle(request):
+    is_liked = False
+    like_post = get_object_or_404(Post, pk=request.POST.get('id'))
+    if like_post.likes.filter(id=request.user.id).exists():
+        like_post.likes.remove(request.user)
+        is_liked = True
+    else:
+        like_post.likes.add(request.user)
+        is_liked = True
+
+    context = {
+        "like_post": like_post,
+        "total_likes": like_post.likes.count(),
         "is_liked": is_liked
     }
+
     if request.is_ajax():
-            html = render_to_string("snippets/post_like.html", context, request=request)
-    return JsonResponse({"like_form": html})
+        html = render_to_string("snippets/likePost.html",
+                                context, request=request)
+        return JsonResponse({"form": html})
+
+    return redirect(reverse('feed'))
 
 
 @login_required(login_url="/login/")

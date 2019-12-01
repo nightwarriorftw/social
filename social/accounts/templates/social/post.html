@@ -1,11 +1,42 @@
-<div class="card">
-  <div class="card-body">
-    <span class="card-title">{{ user.first_name }}&nbsp{{ user.last_name }}</span><h6><span style="font-size: 10px;"><a href="{% url "accounts:profile" user.username %}">@{{ user.username }}</a></span></h6>
-    <p class="card-text">{{ post.body }}</p>
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col mx-5">
+      <div class="card">
+        <div class="card-body">
+          <span class="card-title">{{ post.user.first_name }}&nbsp{{ user.last_name }}</span>
+          <h6>
+            <span style="font-size: 10px;">
+              <a href="{% url "accounts:profile" post.user.username %}">@{{ post.user.username }}</a>
+            </span>
+          </h6>
+          <p class="card-text">{{ post.body }}</p>
+        </div>
+        {% if post.image %}
+              <img class="card-img-top" src="{{post.image.url}}" alt="Card image cap">
+        {% endif %}
+
+        {{totalLikes}}
+      </div>
+
+      <div id="like-section">
+        <form action="{% url 'feed:likePost' post.id %}" method="POST">
+        {% csrf_token %}
+          {% if isLiked %}
+            <button class="btn btn-success" name="id" value="{{post.id}}">Like</button>
+          {% else %}
+            <button class="btn btn-danger" name="id" value="{{post.id}}">Dislike</button>
+          {% endif %}
+        </form>
+      </div>
+  
+    </div>
   </div>
-  {% if post.image %}
-        <img class="card-img-top" src="{{post.image.url}}" alt="Card image cap">
-  {% endif %}
-  <hr/>
-  <span class="space" style="margin-bottom: 30px;"></span>
 </div>
+
+{% endblock %}

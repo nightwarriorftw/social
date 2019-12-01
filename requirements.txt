@@ -3,3 +3,4 @@ psycopg2
 Pillow
 stripe
 django-widget-tweaks
+autopep8

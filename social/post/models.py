@@ -33,6 +33,3 @@ class Post(models.Model):
 
     def __str__(self):
         return self.user.username
-
-    def total_likes(self):
-        return self.likes.count()

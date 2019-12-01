@@ -169,35 +169,36 @@ def feed(request):
 @login_required(login_url='login')
 def PostDetails(request, id):
     post = get_object_or_404(Post, pk=id)
+    isLiked = False
+    if post.likes.filter(id=request.user.id).exists():
+        isLiked = True
     context = {
-        "post": post
+        "post": post,
+        "isLiked": isLiked,
+        "totalLikes": post.likes.count()
     }
     return render(request, "social/post.html", context)
 
 
 @login_required(login_url='login')
 def postLikeToggle(request):
-    is_liked = False
-    like_post = get_object_or_404(Post, pk=request.POST.get('id'))
-    if like_post.likes.filter(id=request.user.id).exists():
-        like_post.likes.remove(request.user)
-        is_liked = True
+    isLiked = False
+    post = get_object_or_404(Post, pk=request.POST.get('id'))
+    if post.likes.filter(id=request.user.id).exists():
+        post.likes.remove(request.user)
+        isLiked = False
+        print(post.likes.all())
     else:
-        like_post.likes.add(request.user)
-        is_liked = True
-
-    context = {
-        "like_post": like_post,
-        "total_likes": like_post.likes.count(),
-        "is_liked": is_liked
-    }
+        post.likes.add(request.user)
+        isLiked = True
+        print(post.likes.all())
 
     if request.is_ajax():
         html = render_to_string("snippets/likePost.html",
                                 context, request=request)
         return JsonResponse({"form": html})
 
-    return redirect(reverse('feed'))
+    return redirect(post.get_absolute_url())
 
 
 @login_required(login_url="/login/")

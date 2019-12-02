@@ -162,7 +162,7 @@ def feed(request):
         "post": post,
         "form": form,
     }
-
+    
     return render(request, "social/feed.html", context)
 
 
@@ -178,6 +178,7 @@ def PostDetails(request, id):
         "totalLikes": post.likes.count()
     }
     if request.is_ajax():
+        print('I am here')
         html = render_to_string("snippets/likePost.html",
                                 context, request=request)
         return JsonResponse({"form": html})
@@ -188,6 +189,7 @@ def PostDetails(request, id):
 def postLikeToggle(request):
     isLiked = False
     post = get_object_or_404(Post, pk=request.POST.get('id'))
+
     if post.likes.filter(id=request.user.id).exists():
         post.likes.remove(request.user)
         isLiked = False
@@ -196,6 +198,8 @@ def postLikeToggle(request):
         post.likes.add(request.user)
         isLiked = True
         print(post.likes.all())
+
+    
 
     return redirect(post.get_absolute_url())
 

@@ -177,6 +177,10 @@ def PostDetails(request, id):
         "isLiked": isLiked,
         "totalLikes": post.likes.count()
     }
+    if request.is_ajax():
+        html = render_to_string("snippets/likePost.html",
+                                context, request=request)
+        return JsonResponse({"form": html})
     return render(request, "social/post.html", context)
 
 
@@ -192,11 +196,6 @@ def postLikeToggle(request):
         post.likes.add(request.user)
         isLiked = True
         print(post.likes.all())
-
-    if request.is_ajax():
-        html = render_to_string("snippets/likePost.html",
-                                context, request=request)
-        return JsonResponse({"form": html})
 
     return redirect(post.get_absolute_url())
 

@@ -28,9 +28,9 @@
         <form action="{% url 'feed:likePost' %}" method="POST">
         {% csrf_token %}
           {% if isLiked %}
-            <button class="btn btn-danger" name="id" value="{{post.id}}">Dislike</button>
+            <button class="btn btn-danger" name="id" id="like" value="{{post.id}}">Dislike</button>
           {% else %}
-            <button class="btn btn-success" name="id" value="{{post.id}}">Like</button>
+            <button class="btn btn-success" name="id" id="like" value="{{post.id}}">Like</button>
           {% endif %}
         </form>
       </div>

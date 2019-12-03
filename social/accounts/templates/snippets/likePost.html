@@ -1,4 +1,4 @@
-{{totalLikes}}
+ Like{{totalLikes|pluralize}} : {{totalLikes}}
 <form action="" method="POST">
     {% csrf_token %}
     {% if isLiked %}

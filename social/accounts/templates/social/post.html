@@ -9,7 +9,7 @@
     <div class="col mx-5">
       <div class="card">
         <div class="card-body">
-          <span class="card-title">{{ post.user.first_name }}&nbsp{{ user.last_name }}</span>
+          <span class="card-title"><span class="mr-2"><a href="{% url 'home' %}"><i class="fa fa-angle-double-left"></i></a></span>{{ post.user.first_name }}&nbsp{{ user.last_name }}</span>
           <h6>
             <span style="font-size: 10px;">
               <a href="{% url "accounts:profile" post.user.username %}">@{{ post.user.username }}</a>

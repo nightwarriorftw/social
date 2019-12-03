@@ -383,3 +383,12 @@ html {
 .signinform-form-container h1 {
 	color: white;
 }
+
+#post-form {
+	position: fixed;
+	margin-top: 20px;
+}
+
+#sidebar {
+	position: fixed;
+}

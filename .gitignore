@@ -5,3 +5,5 @@ cred.sh
 __pycache__/
 virtual/
 .vscode/
+migrations/
+static_cdn/

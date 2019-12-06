@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import pre_save, post_save
 from .utils import random_player_id_generator
 from django.dispatch import receiver
+from django.db.models import Q
 
 
 def get_filename(filename):
@@ -21,6 +22,24 @@ def add_avatar(instance, filename):
     return "{username}/avatar/{imageName}".format(username=instance, imageName=imageName)
 
 
+# Custom Query Manager
+class ProfileQuerySet(models.QuerySet):
+
+    def search(self, query):
+        lookups = Q(user_username__icontains=query) | \
+            Q(user_first_name__icontains=query) | \
+            Q(user_last_name__icontains=query)
+
+        return self.filter(looksups).distinct()
+
+
+# Custom Model Manager
+class ProfileManager(models.Manager):
+
+    def get_queryset(self):
+        return self.ProfileQuerySet(self.model, using=self._db)
+
+
 class Profiles(models.Model):
     user = models.OneToOneField(
         User, on_delete=models.CASCADE, related_name='profile')
@@ -28,6 +47,8 @@ class Profiles(models.Model):
     followed_to = models.ManyToManyField(
         'self', related_name='followed_by', symmetrical=False)
     avatar = models.ImageField(upload_to=add_avatar, null=True, blank=True)
+
+    objects = ProfileManager()
 
     def __str__(self):
         return self.user.username

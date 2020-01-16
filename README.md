@@ -79,11 +79,11 @@ python -c "from django.core.management.utils import get_random_secret_key; print
 ```
 
 Now paste this secret key in `social/social/settings.py` file.
-Remember to use environment variables for setting secret key. And don't push secret key on your branch. Check out how to setup environment variables in Python3 (here)[https://stackoverflow.com/questions/5971312/how-to-set-environment-variables-in-python].
+Remember to use environment variables for setting secret key. And don't push secret key on your branch. Check out how to setup environment variables in Python3 [here](https://stackoverflow.com/questions/5971312/how-to-set-environment-variables-in-python)
 
 #### 5. Setup postgress database
 
-Check out this link to setup postgress database (here)[https://djangocentral.com/using-postgresql-with-django/]
+Check out this link to setup postgress database [here](https://djangocentral.com/using-postgresql-with-django/)
 
 #### 6. Create a super user & Run server:
 

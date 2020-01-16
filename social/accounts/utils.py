@@ -2,7 +2,7 @@
 import string
 import random
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
-from django.utils import six
+import six
 
 
 def random_player_id_generator(size=10, chars=string.digits):

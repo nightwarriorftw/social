@@ -7,3 +7,4 @@ virtual/
 .vscode/
 migrations/
 static_cdn/
+db.sqlite3

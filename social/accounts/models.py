@@ -37,7 +37,7 @@ class ProfileQuerySet(models.QuerySet):
 class ProfileManager(models.Manager):
 
     def get_queryset(self):
-        return self.ProfileQuerySet(self.model, using=self._db)
+        return ProfileQuerySet(self.model, using=self._db)
 
 
 class Profiles(models.Model):

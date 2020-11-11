@@ -8,3 +8,4 @@ virtual/
 migrations/
 static_cdn/
 db.sqlite3
+test/

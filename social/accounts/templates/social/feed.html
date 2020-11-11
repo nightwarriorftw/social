@@ -4,66 +4,73 @@
 
 {% block content %}
 <div class="container">
-<div class="row">
-    <div class="row">
-        <div class="col-3">
-            <div id="sidebar">
-                <div class="card">
+        <div class="row">
+
+            <div class="col-3">
+                <div id="sidebar">
+                    <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title"><span style="font-size: 15px;">{{ user.first_name}} {{user.last_name}}</span></h4>
+                            <h4 class="card-title"><span style="font-size: 15px;">{{ user.first_name}}
+                                    {{user.last_name}}</span></h4>
                             <!-- <p class="card-text">Bio</p> -->
-                            <h6><span class="font-size: 15px;">Followers&nbsp{{ request.user.profile.followed_by.count }}<br>Following&nbsp{{ request.user.profile.followed_to.count }}</span></h6>
-                            <a href="{% url 'accounts:profile' user.username %}" class="card-link"><span style="font-size: 13px;">Profile</a>
+                            <h6><span
+                                    class="font-size: 15px;">Followers&nbsp{{ request.user.profile.followed_by.count }}<br>Following&nbsp{{ request.user.profile.followed_to.count }}</span>
+                            </h6>
+                            <a href="{% url 'accounts:profile' user.username %}" class="card-link"><span
+                                    style="font-size: 13px;">Profile</a>
                         </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-6">
-            {% for p in post %}
+
+            <div class="col-6">
+                {% for p in post %}
                 <div class="card">
                     <div class="card-body">
                         <span class="card-title">{{ p.user.first_name }}&nbsp{{ p.user.last_name }}</span> &nbsp
-                        <a href="{% url 'feed:postDetails' p.id %}" >
+                        <a href="{% url 'feed:postDetails' p.id %}">
                             <span style="font-size: 20px;"><i class="fa fa-angle-double-right"></i></span>
                         </a>
-                        <h6><span style="font-size: 10px;"><a href="{% url "accounts:profile" p.user.username %}">@{{ p.user.username }}</a></span></h6>
+                        <h6><span style="font-size: 10px;"><a
+                                    href="{% url "accounts:profile" p.user.username %}">@{{ p.user.username }}</a></span>
+                        </h6>
                         <p class="card-text">{{ p.body }}</p>
                     </div>
                     {% if p.image %}
-                            <img class="card-img-top" src="{{p.image.url}}" alt="Card image cap">
+                    <img class="card-img-top" src="{{p.image.url}}" alt="Card image cap">
                     {% endif %}
-                    <span class="mx-4 my-3"><i class="fa fa-thumbs-up"></i> {{p.likes.count}}</span> 
+                    <span class="mx-4 my-3"><i class="fa fa-thumbs-up"></i> {{p.likes.count}}</span>
                     <span class="space" style="margin-bottom: 30px;"></span>
                 </div>
                 <br>
-            {% endfor %}
-        </div>
-        
-        <div class="col-3">
-            <div id="post-form">
-                <span style="font-size: 35px; color: #1f1f1f; font-family: sans-serif;">Add Post </span>
-                <form action="" method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <span onkeyup="success()">
-                        {{form.body}}
-                        {{form.image}}<br>
-                    </span>
-                    <button type="submit" id="submit_button" class="btn btn-danger" disabled>Post</button>
-                </form>
+                {% endfor %}
             </div>
-        </div>
+
+            <div class="col-3">
+                <div id="post-form">
+                    <span style="font-size: 35px; color: #1f1f1f; font-family: sans-serif;">Add Post </span>
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <span onkeyup="success()">
+                            {{form.body}}
+                            {{form.image}}<br>
+                        </span>
+                        <button type="submit" id="submit_button" class="btn btn-danger" disabled>Post</button>
+                    </form>
+                </div>
+            </div>
     </div>
 </div>
 {% endblock %}
 {% block javascript %}
-    <script>
-        function success(){
-            if (document.getElementById("id_body").value === ""){
-                document.getElementById("submit_button").disabled = true;
-            }
-            else {
-                document.getElementById("submit_button").disabled = false;
-            }
+<script>
+    function success() {
+        if (document.getElementById("id_body").value === "") {
+            document.getElementById("submit_button").disabled = true;
         }
-    </script>
+        else {
+            document.getElementById("submit_button").disabled = false;
+        }
+    }
+</script>
 {% endblock %}
